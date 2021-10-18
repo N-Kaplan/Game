@@ -17,39 +17,51 @@ let cardFaces = ['resources/images/aquarium.png',
 cardFaces.push(...cardFaces);
 
 const shuffleFaces = (faces) => {
-    //for (let i = cards.length - 1; i > 0; i--) {
     for (let i = 0; i < faces.length; i++) {
         const j = Math.floor(Math.random() * (i + 1));
         [faces[i], faces[j]] = [faces[j], faces[i]];
     }
-    console.log(faces);
 };
 
+const closeCard = (id) => {
+    cards[id].classList.replace('face', 'back');
+    cards[id].style.backgroundImage = 'url("resources/images/Puzzle-icon.png")';
+}
+
+//start with shuffled deck
 shuffleFaces(cardFaces);
 
-
-
+//new game
 start.addEventListener('click', () => {
-    for (let card of cards) {
-        card.classList.replace('face', 'back');
-        card.style.backgroundImage = 'url("resources/images/Puzzle-icon.png")';
+    for (let i = 0; i < cards.length; i++) {
+        closeCard(i);
     }
     shuffleFaces(cardFaces);
 })
 
+//turning cards in game
+let c1, c2;
 for (let i = 0; i < cards.length; i++) {
     cards[i].addEventListener('click', () => {
-        cards[i].getAttribute('class') === 'card back' ? cards[i].classList.replace('back', 'face') : cards[i].classList.replace('face', 'back');
+        cards[i].getAttribute('class') === 'card back' ? cards[i].classList.replace('back', 'face') : closeCard(i);
         if (cards[i].className === 'card face') {
             cards[i].style.backgroundImage = `url(${cardFaces[i]})`;
-        } else {
-            cards[i].style.backgroundImage = 'url("resources/images/Puzzle-icon.png")';}
+            //store open card
+            c1 ? c2 = cards[i].id : c1 = cards[i].id;
+            console.log(`c1 ${c1}`);
+            console.log(`c2 ${c2}`);
+
+            //if cards don't match, turn both
+            if (c1 !== undefined && c2 !== undefined) {
+                if (cards[c1].style.backgroundImage !== cards[c2].style.backgroundImage) {
+                    let one = setTimeout(closeCard, 1000, c1);
+                    let two = setTimeout(closeCard, 1000, c2);
+                }
+                c1 = undefined;
+                c2 = undefined;
+                console.log(`c1 ${c1}`);
+                console.log(`c2 ${c2}`);
+            }
+        }
     })
 }
-
-// test.getAttribute('class') === 'card back' ? test.classList.replace('back', 'face') : test.classList.replace('face', 'back');
-// if (test.className === 'card face') {
-//     test.style.backgroundImage = 'url("resources/images/falcon.png")';
-// } else {
-//     test.style.backgroundImage = 'url("resources/images/Puzzle-icon.png")';
-// }
