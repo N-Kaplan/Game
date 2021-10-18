@@ -1,4 +1,3 @@
-# Game
 <h1>Memory Game:</h1>
 
 Click on two cards to turn them and see if they match!
