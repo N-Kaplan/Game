@@ -50,8 +50,6 @@ for (let i = 0; i < cards.length; i++) {
             cards[i].style.backgroundImage = `url(${cardFaces[i]})`;
             //store open card
             c1 ? c2 = cards[i].id : c1 = cards[i].id;
-            console.log(`c1 ${c1}`);
-            console.log(`c2 ${c2}`);
 
             //if cards don't match, turn both
             if (c1 !== undefined && c2 !== undefined) {
@@ -59,10 +57,6 @@ for (let i = 0; i < cards.length; i++) {
                     let one = setTimeout(closeCard, 750, c1);
                     let two = setTimeout(closeCard, 750, c2);
                 }
-                c1 = undefined;
-                c2 = undefined;
-                console.log(`c1 ${c1}`);
-                console.log(`c2 ${c2}`);
             }
         }
     })
