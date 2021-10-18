@@ -26,6 +26,8 @@ const shuffleFaces = (faces) => {
 const closeCard = (id) => {
     cards[id].classList.replace('face', 'back');
     cards[id].style.backgroundImage = 'url("resources/images/Puzzle-icon.png")';
+    c1 = undefined;
+    c2 = undefined;
 }
 
 //start with shuffled deck
@@ -54,8 +56,8 @@ for (let i = 0; i < cards.length; i++) {
             //if cards don't match, turn both
             if (c1 !== undefined && c2 !== undefined) {
                 if (cards[c1].style.backgroundImage !== cards[c2].style.backgroundImage) {
-                    let one = setTimeout(closeCard, 1000, c1);
-                    let two = setTimeout(closeCard, 1000, c2);
+                    let one = setTimeout(closeCard, 750, c1);
+                    let two = setTimeout(closeCard, 750, c2);
                 }
                 c1 = undefined;
                 c2 = undefined;
