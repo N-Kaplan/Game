@@ -8,4 +8,4 @@ This is a solo project intended to practice newly acquired JavaScript, HTML and 
 
 ***
 
-<img src='resources/images/Screenshot.png' alt='memory game'>
+<a href="https://n-kaplan.github.io/Game/"><img src='resources/images/Screenshot.png' alt='memory game'></a>
