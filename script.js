@@ -78,7 +78,7 @@ for (let i = 0; i < cards.length; i++) {
             if (open.length === 2) {
                 if (cards[open[0]].style.backgroundImage !== cards[open[1]].style.backgroundImage) {
                     for (let card of open) {
-                        setTimeout(closeCard, 750, card)
+                        setTimeout(closeCard, 700, card)
                     }
                 } else {
                     open = [];
