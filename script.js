@@ -26,8 +26,12 @@ const shuffleFaces = (faces) => {
 const closeCard = (id) => {
     cards[id].classList.replace('face', 'back');
     cards[id].style.backgroundImage = 'url("resources/images/Puzzle-icon.png")';
-    c1 = undefined;
-    c2 = undefined;
+    //remove card from open cards array
+    for( let i = 0; i < open.length; i++) {
+        if (open[i] === id) {
+            open.splice(i, 1);
+        }
+    }
 }
 
 //start with shuffled deck
@@ -41,21 +45,24 @@ start.addEventListener('click', () => {
     shuffleFaces(cardFaces);
 })
 
-//turning cards in game
-let c1, c2;
+//turning cards in game, only 2 unmatched cards can be open at the same time
+let open = [];
 for (let i = 0; i < cards.length; i++) {
     cards[i].addEventListener('click', () => {
-        cards[i].getAttribute('class') === 'card back' ? cards[i].classList.replace('back', 'face') : closeCard(i);
-        if (cards[i].className === 'card face') {
+        if (cards[i].getAttribute('class') === 'card back' && open.length < 2) {
+            cards[i].classList.replace('back', 'face')
             cards[i].style.backgroundImage = `url(${cardFaces[i]})`;
             //store open card
-            c1 ? c2 = cards[i].id : c1 = cards[i].id;
+            open.push(cards[i].id);
+            console.log(open);
 
-            //if cards don't match, turn both
-            if (c1 !== undefined && c2 !== undefined) {
-                if (cards[c1].style.backgroundImage !== cards[c2].style.backgroundImage) {
-                    let one = setTimeout(closeCard, 750, c1);
-                    let two = setTimeout(closeCard, 750, c2);
+            //if cards don't match, turn both, if they do match, empty the open playing cards array
+            if (open.length === 2) {
+                if (cards[open[0]].style.backgroundImage !== cards[open[1]].style.backgroundImage) {
+                    setTimeout(closeCard, 750, open[0]);
+                    setTimeout(closeCard, 750, open[1]);
+                } else {
+                    open = [];
                 }
             }
         }
