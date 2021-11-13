@@ -34,18 +34,37 @@ const closeCard = (id) => {
     }
 }
 
-//start with shuffled deck
-shuffleFaces(cardFaces);
+//win message, clicking starts a new game
+const gameWon = () => {
+    let message = document.createElement("DIV");
+    message.innerText = "You Won!";
+    message.classList.add('you-won');
+    document.body.appendChild(message);
+    message.addEventListener('click', newGame);
+}
 
-//new game
-start.addEventListener('click', () => {
+const newGame = () => {
+    matches = 0;
     for (let i = 0; i < cards.length; i++) {
         closeCard(i);
     }
     shuffleFaces(cardFaces);
-})
+    //remove win message if it exists
+    const win_message = document.querySelector(".you-won");
+    if (win_message) {
+        win_message.remove();
+    }
+}
 
-//turning cards in game, only 2 unmatched cards can be open at the same time
+//start with shuffled deck
+shuffleFaces(cardFaces);
+
+//new game
+start.addEventListener('click', newGame);
+
+//keep track of matches
+let matches = 0;
+//turning cards in game, only 2 unmatched cards can be open at once
 let open = [];
 for (let i = 0; i < cards.length; i++) {
     cards[i].addEventListener('click', () => {
@@ -54,15 +73,19 @@ for (let i = 0; i < cards.length; i++) {
             cards[i].style.backgroundImage = `url(${cardFaces[i]})`;
             //store open card
             open.push(cards[i].id);
-            console.log(open);
 
             //if cards don't match, turn both, if they do match, empty the open playing cards array
             if (open.length === 2) {
                 if (cards[open[0]].style.backgroundImage !== cards[open[1]].style.backgroundImage) {
-                    setTimeout(closeCard, 750, open[0]);
-                    setTimeout(closeCard, 750, open[1]);
+                    for (let card of open) {
+                        setTimeout(closeCard, 750, card)
+                    }
                 } else {
                     open = [];
+                    matches++;
+                    if (matches === 10) {
+                        gameWon();
+                    }
                 }
             }
         }
